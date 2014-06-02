@@ -2,7 +2,8 @@
     class Ambiente {
         private $id;
         private $nome;
-        private $posicao;
+        private $posicaoX;
+        private $posicaoY;
         private $listaModulos;
         private $idAndar;
         
@@ -22,12 +23,20 @@
             return $this->nome;
         }
         
-        public function setPosicao($posicao) {
-            $this->posicao = $posicao;
+        public function setPosicaoX($posicaoX) {
+            $this->posicaoX = $posicaoX;
         }
         
-        public function getPosicao() {
-            return $this->posicao;
+        public function getPosicaoX() {
+            return $this->posicaoX;
+        }
+        
+        public function setPosicaoY($posicaoY) {
+            $this->posicaoY = $posicaoY;
+        }
+        
+        public function getPosicaoY() {
+            return $this->posicaoY;
         }
         
         public function setListaModulos($listaModulos) {

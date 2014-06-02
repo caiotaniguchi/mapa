@@ -4,8 +4,8 @@ class ModuloDAO {
     private var $db;
     
     // Attempts to initialize the database connection using the supplied info.
-    public function ModuloDAO($host, $username, $password, $database) {
-        $this->conexao = mysql_connect($host, $username, $password);
+    public function ModuloDAO($host, $usuario, $senha, $database) {
+        $this->conexao = mysql_connect($host, $usuario, $senha);
         $this->db = mysql_select_db($database);
     }
     

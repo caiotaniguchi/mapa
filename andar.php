@@ -30,7 +30,7 @@
             return $this->planta;
         }
         
-        public function setlistaAmbientes($listaAmbientes) {
+        public function setListaAmbientes($listaAmbientes) {
             $this->listaAmbientes = $listaAmbientes;
         }
         
