@@ -18,13 +18,14 @@ class AmbienteDAO {
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
                 $linha = mysql_fetch_assoc($resultados);
-                $ambientes[$i] = new ambiente();
+                $ambientes[$i] = new Ambiente();
                 
                 $ambientes[$i]->setId($linha['id']);
                 $ambientes[$i]->setNome($linha['nome']);
 				$ambientes[$i]->setPosicaoX($linha['posicaoX']);
                 $ambientes[$i]->setPosicaoY($linha['posicaoY']);                
                 $ambientes[$i]->setIdAmbiente($linha['idAmbiente']);
+                $ambientes[$i]->setlistaModulos($moduloDAO->getPorIdAmbiente($ambientes[$i]->getId()));
             }
         }
         return $ambientes;

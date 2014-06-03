@@ -1,14 +1,14 @@
 <?php
-class AndarDAO {
+class EdificioDAO {
     private var $conexao;
     private var $db;
-    private var $ambienteDAO;
+    private var $andarDAO;
     
     // Attempts to initialize the database connection using the supplied info.
-    public function AndarDAO($host, $usuario, $senha, $database, $ambienteDAO) {
+    public function EdificioDAO($host, $usuario, $senha, $database, $andarDAO) {
         $this->conexao = mysql_connect($host, $usuario, $senha);
         $this->db = mysql_select_db($database);
-        $this->ambienteDAO = $ambienteDAO;
+        $this->andarDAO = $andarDAO;
     }
     
     // Executes the specified query and returns an associative array of reseults.
@@ -18,12 +18,12 @@ class AndarDAO {
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
                 $linha = mysql_fetch_assoc($resultados);
-				$andares[$i] = new Andar();
+				$edificio[$i] = new ambiente();
                 
-                $andares[$i]->setId($linha['id']);
-                $andares[$i]->setNumAndar($linha['numAndar']);
-				$andares[$i]->setPlanta($linha['planta']);
-                $andares[$i]->setIdEdificio($linha['idAmbiente']);
+                $edificio[$i]->setId($linha['id']);
+                $edificio[$i]->setNumAndar($linha['numAndar']);
+				$edificio[$i]->setPlanta($linha['planta']);
+                $edificio[$i]->setIdEdificio($linha['idAmbiente']);
 				$andares[$i]->setListaAndares($ambienteDAO->getPorIdAndar($andares[$i]->getId()));
             }
         }
@@ -32,8 +32,8 @@ class AndarDAO {
     
     // Retrieves the corresponding row for the specified user ID.
     // conferir nome da tabela 'andares' no banco de dados
-    public function getPorIdEdificio($idEdificio, $ambienteDAO) {
-        $sql = "SELECT * FROM andares WHERE id=".$idEdificio;
+    public function getEdificios($nomeEdificio, $ambienteDAO) {
+        $sql = "SELECT * FROM edificio";
         return $this->executar($sql);
     }
     
