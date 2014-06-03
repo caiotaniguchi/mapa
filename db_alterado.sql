@@ -18,6 +18,7 @@ CREATE TABLE "sala" (
     "nome" varchar(200) NOT NULL,
     "posicao_x" real NOT NULL,
     "posicao_y" real NOT NULL,
+    "contorno" varchar (200) NOT NULL,
     "andar_id" integer NOT NULL REFERENCES "andar" ("id")
 )
 ;
