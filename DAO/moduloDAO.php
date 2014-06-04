@@ -2,20 +2,15 @@
 include 'modulo.php';
 
 class ModuloDAO {
-    private $conexao;
-    private $db;
-    private $estadoDAO;
-    
-    // Attempts to initialize the database connection using the supplied info.
-    public function ModuloDAO($host, $usuario, $senha, $database, $estadoDAO) {
-        $this->conexao = mysql_connect($host, $usuario, $senha);
-        $this->db = mysql_select_db($database);
-        $this->estadoDAO = $estadoDAO;
-    }
+	private $estadoDAO;
+	
+	public function ModuloDAO ($estadoDAO) {
+		$this->estadoDAO = $estadoDAO;
+	}
     
     // Executa uma query e retorna um array de modulos
-    protected function executar($sql) {
-        $resultados = mysql_query($sql, $this->conexao) or die(mysql_error());
+    protected function executar($sql, $conexao) {
+        $resultados = mysql_query($sql, $conexao) or die(mysql_error());
         $modulos = null;
         
         if(mysql_num_rows($resultados) > 0) {
@@ -25,7 +20,7 @@ class ModuloDAO {
                       
                 $modulos[$i]->setId($linha['id']);
                 $modulos[$i]->setIdAmbiente($linha['sala_id']);
-				$modulos[$i]->setEstado($this->estadoDAO->getPorIdModulo($modulos[$i]->getId()));
+				$modulos[$i]->setEstado($this->estadoDAO->getPorIdModulo($modulos[$i]->getId(), $conexao));
             }
         }
         return $modulos;
@@ -33,13 +28,13 @@ class ModuloDAO {
     
     // Retrieves the corresponding row for the specified user ID.
     // conferir nome da tabela 'modulos' no banco de dados
-    public function getPorIdAmbiente($idAmbiente) {
+    public function getPorIdAmbiente($idAmbiente, $conexao) {
         $sql = "SELECT * FROM modulo WHERE id = ".$idAmbiente;
-        return $this->executar($sql);
+        return $this->executar($sql, $conexao);
     }
     
      
-    public function gravar($modulo) {
+    public function gravar($modulo, $conexao) {
         
         if($modulo->getId() != "") {
             $modulosAtuais = $this->getPorIdAmbiente($modulo->getIdAmbiente());
@@ -60,13 +55,13 @@ class ModuloDAO {
 					"sala_id=".$modulo->getIdAmbiente().", ".
 					"WHERE id=".$modulo->getId();
             
-            mysql_query($sql, $this->conexao) or die(mysql_error());
+            mysql_query($sql, $conexao) or die(mysql_error());
         }
         else {
             $sql = "INSERT INTO modulo (sala_id) VALUES(".
 					$modulo->getIdAmbiente().")";
             
-            mysql_query($sql, $this->conexao) or die(mysql_error());
+            mysql_query($sql, $conexao) or die(mysql_error());
         }
         return true;
     }

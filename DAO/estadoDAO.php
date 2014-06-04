@@ -2,18 +2,11 @@
 include 'estado.php';
 
 class EstadoDAO {
-    private $conexao;
-    private $db;
-    
-    // Attempts to initialize the database connection using the supplied info.
-    public function EstadoDAO($host, $usuario, $senha, $database) {
-        $this->conexao = mysql_connect($host, $usuario, $senha);
-        $this->db = mysql_select_db($database);
-    }
     
     // Executes the specified query and returns an associative array of reseults.
-    protected function executar($sql) {
-        $resultados = mysql_query($sql, $this->conexao) or die(mysql_error());
+    protected function executar($sql, $conexao) {
+        //$resultados = mysql_query($sql, $this->conexao) or die(mysql_error());
+		$resultados = mysql_query($sql, $conexao) or die(mysql_error());
 
             
         if(mysql_num_rows($resultados) > 0) {
@@ -31,10 +24,10 @@ class EstadoDAO {
     }
     
     // Retorna o ultimo estado de um modulo
-    public function getPorIdModulo($idModulo) {
+    public function getPorIdModulo($idModulo, $conexao) {
         //$sql = "SELECT * FROM estado ORDER BY id DESC LIMIT 1 WHERE id=".$idModulo;
         $sql = "SELECT * FROM estado WHERE modulo_id=".$idModulo;
-        return $this->executar($sql);
+        return $this->executar($sql, $conexao);
     }
    
 }
