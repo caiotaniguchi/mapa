@@ -1,10 +1,10 @@
 <?php
     class Edificio {
-        private $id;
-        private $nome;
-        private $andarInicial;
-        private $andarFinal;
-        private $listaAndares;
+        public $id;
+        public $nome;
+        public $andarInicial;
+        public $andarFinal;
+        public $listaAndares;
         
         public function setId($id) {
             $this->id = $id;
