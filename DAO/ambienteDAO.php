@@ -1,4 +1,6 @@
 <?php
+include 'ambiente.php';
+
 class AmbienteDAO {
     private $conexao;
     private $db;
@@ -22,7 +24,7 @@ class AmbienteDAO {
                 
                 $ambientes[$i]->setId($linha['id']);
                 $ambientes[$i]->setNome($linha['nome']);
-$ambientes[$i]->setPosicaoX($linha['posicao_x']);
+				$ambientes[$i]->setPosicaoX($linha['posicao_x']);
                 $ambientes[$i]->setPosicaoY($linha['posicao_y']);
                 $ambientes[$i]->setContorno($linha['contorno']);
                 $ambientes[$i]->setIdAndar($linha['andar_id']);

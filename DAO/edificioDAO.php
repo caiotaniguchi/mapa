@@ -1,4 +1,6 @@
 <?php
+include 'edificio.php';
+
 class EdificioDAO {
     private $conexao;
     private $db;
@@ -18,13 +20,13 @@ class EdificioDAO {
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
                 $linha = mysql_fetch_assoc($resultados);
-$edificios[$i] = new Edificio();
+				$edificios[$i] = new Edificio();
                 
                 $edificios[$i]->setId($linha['id']);
                 $edificios[$i]->setNome($linha['nome']);
-$edificios[$i]->setAndarInicial($linha['andar_inicial']);
+				$edificios[$i]->setAndarInicial($linha['andar_inicial']);
                 $edificios[$i]->setAndarFinal($linha['andar_final']);
-$edificios[$i]->setListaAndares($this->andarDAO->getPorIdEdificio($edificios[$i]->getId()));
+				//$edificios[$i]->setListaAndares($this->andarDAO->getPorIdEdificio($edificios[$i]->getId()));
             }
         }
         return $edificios;
@@ -35,6 +37,11 @@ $edificios[$i]->setListaAndares($this->andarDAO->getPorIdEdificio($edificios[$i]
     public function getEdificios() {
         $sql = "SELECT * FROM edificio";
         return $this->executar($sql);
+    }
+    
+    public function loadListaAndares($edificio) {
+		$edificio->setListaAndares($this->andarDAO->getPorIdEdificio($edificio->getId()));
+		return $edificio;
     }
     
 }

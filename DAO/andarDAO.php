@@ -1,4 +1,6 @@
 <?php
+include 'andar.php';
+
 class AndarDAO {
     private $conexao;
     private $db;
@@ -18,13 +20,13 @@ class AndarDAO {
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
                 $linha = mysql_fetch_assoc($resultados);
-$andares[$i] = new Andar();
+				$andares[$i] = new Andar();
                 
                 $andares[$i]->setId($linha['id']);
                 $andares[$i]->setNumAndar($linha['numAndar']);
-$andares[$i]->setPlanta($linha['planta']);
+				$andares[$i]->setPlanta($linha['planta']);
                 $andares[$i]->setIdEdificio($linha['edificio_id']);
-$andares[$i]->setListaAmbientes($this->ambienteDAO->getPorIdAndar($andares[$i]->getId()));
+				//$andares[$i]->setListaAmbientes($this->ambienteDAO->getPorIdAndar($andares[$i]->getId()));
             }
         }
         return $andares;
@@ -35,6 +37,11 @@ $andares[$i]->setListaAmbientes($this->ambienteDAO->getPorIdAndar($andares[$i]->
     public function getPorIdEdificio($idEdificio) {
         $sql = "SELECT * FROM andar WHERE id=".$idEdificio;
         return $this->executar($sql);
+    }
+    
+    public function loadListaAmbientes($andar) {
+		$andar->setListaAmbientes($this->ambienteDAO->getPorIdAndar($andar->getId()));
+		return $andar;
     }
     
 }

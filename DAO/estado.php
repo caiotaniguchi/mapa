@@ -1,6 +1,6 @@
 <?php
     class EstadoModulo {
-private $id;
+		private $id;
         private $idModulo;
         private $estado;
         private $dataEntrada;

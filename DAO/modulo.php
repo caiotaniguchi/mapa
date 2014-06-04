@@ -1,7 +1,7 @@
 <?php
     class Modulo {
-private $id;
-private $estado;
+		private $id;
+		private $estado;
         private $idAmbiente;
         private $posicao;
                 
@@ -34,7 +34,7 @@ private $estado;
         }
         
         public function getPosicao() {
-            return $this->Posicao;
+            return $this->posicao;
         }
     }
 ?>
