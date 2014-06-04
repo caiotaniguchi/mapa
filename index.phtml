@@ -1,14 +1,8 @@
 <?
-  error_reporting(E_ALL);
-  ini_set('display_errors', 1);
-  include 'DAO/edificioDAO.php';
-  include 'DAO/edificio.php';
-  $db_host = 'localhost';
-  $db_usuario = 'root';
-  $db_senha = '1234';
-  $db_database = 'rede_sensores';
-  $edDao = new EdificioDAO($db_host, $db_usuario, $db_senha, $db_database, 1);
-  $edificios = $edDao->getEdificios();
+  include 'mapa.php';
+  //$_SESSION['mapa'] = serialize($mapa);
+  $mapa->getListaEdificios();
+ 
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,7 +48,7 @@
  			<form>
  				<select id="sel_edificio" onchange="changeEdificio(this.value);"  >
  					<option value=''>--Escolha um Edificio--</option>
-          <? foreach($edificios as $edificio):?>
+          <? foreach($mapa->listaEdificios as $edificio):?>
  					  <option value='<?=$edificio->getId()?>'><?= $edificio->getNome()?></option>
           <?endforeach;?>
  				</select>

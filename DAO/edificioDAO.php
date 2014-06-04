@@ -19,12 +19,12 @@ class EdificioDAO {
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
                 $linha = mysql_fetch_assoc($resultados);
-				$edificios[$i] = new Edificio();
+				$edificios[$linha['id']] = new Edificio();
                 
-                $edificios[$i]->setId($linha['id']);
-                $edificios[$i]->setNome($linha['nome']);
-				$edificios[$i]->setAndarInicial($linha['andar_inicial']);
-                $edificios[$i]->setAndarFinal($linha['andar_final']);
+                $edificios[$linha['id']]->setId($linha['id']);
+                $edificios[$linha['id']]->setNome($linha['nome']);
+				$edificios[$linha['id']]->setAndarInicial($linha['andar_inicial']);
+                $edificios[$linha['id']]->setAndarFinal($linha['andar_final']);
 				//$edificios[$i]->setListaAndares($this->andarDAO->getPorIdEdificio($edificios[$i]->getId()));
             }
         }
