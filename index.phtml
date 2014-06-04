@@ -17,22 +17,50 @@
   			}
   			function changeEdificio(ed_id){
   				xhr.url = "mapa.php?ed_id="+ed_id;
-  				xhr.onUpdate = function(request) {				
-					try {
-						//_status["response"] = eval(request.responseText);	
-					} catch(e) {
-					}
-				}
+  				xhr.onUpdate = function(request) {			
+  					try {
+  						mapa['listaAndares'] = eval(request.responseText);
+  					} catch(e) {
+  					}
+            $('map_img').src = "";
+            $('sel_andar').innerHTML = "";
+            console.log(mapa['listaAndares']); 
+            if (mapa['listaAndares']){
+                  var option = document.createElement('option');
+                  option.setAttribute('value',"");
+                  option.innerHTML = "-- Escolha um Andar --";
+              $('sel_andar').appendChild(option);
+              for(andar in mapa['listaAndares']){
+                  var option = document.createElement('option');
+                  option.setAttribute('value',mapa['listaAndares'][andar].id);
+                  option.innerHTML = mapa['listaAndares'][andar].numAndar;
+                  $('sel_andar').appendChild(option);
+              }
+            }else{
+              var option = document.createElement('option');
+              option.setAttribute('value',"");
+              option.innerHTML = "--Nenhum Andar Cadastrado--";
+              $('sel_andar').appendChild(option);
+            }
+				  }
 				xhr.start();	
   			}
   			function changeAndar(an_id){
   				xhr.url = "mapa.php?an_id="+an_id;
   				xhr.onUpdate = function(request) {				
 					try {
-						var src = request.responseText;
-						console.log(src);
+						//var src = request.responseText;
+						//console.log(src);
 					} catch(e) {
 					}
+          var src = "";
+          for(andar in mapa['listaAndares']){
+            if(mapa['listaAndares'][andar].id == an_id){
+              src = "plantas/"+mapa['listaAndares'][andar].planta;
+              console.log(src);
+              break;
+            }
+          }
 					$('map_img').src = src; 
 				}
 				xhr.start();	
@@ -40,6 +68,8 @@
 
   			window.onload=function (){
   				xhr = new XHRUpdater('mapa.php', 0);
+          mapa = {};
+          mapa['listaAndares'] = [];
   			}
   		</script>
  	</head>
@@ -52,10 +82,8 @@
  					  <option value='<?=$edificio->getId()?>'><?= $edificio->getNome()?></option>
           <?endforeach;?>
  				</select>
- 				<select id="sel_andar" onchange="changeAndar(this.value);" >
+ 				<select id="sel_andar" style="width:170px; text-align:center;"  onchange="changeAndar(this.value);" >
  					<option value=''>--Escolha um Andar--</option>
- 					<option value='1'>An1</option>
- 					<option value='2'>An2</option>
  				</select> 
  			</form>
 		</div>

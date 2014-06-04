@@ -1,6 +1,6 @@
 <?php
-include 'modulo.php';
-include 'estadoDAO.php';
+include_once 'modulo.php';
+include_once 'estadoDAO.php';
 
 class ModuloDAO {
 	

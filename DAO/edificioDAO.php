@@ -1,6 +1,6 @@
 <?php
-include 'edificio.php';
-include 'andarDAO.php';
+include_once 'edificio.php';
+include_once 'andarDAO.php';
 
 class EdificioDAO {
     

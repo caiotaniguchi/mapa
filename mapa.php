@@ -1,6 +1,6 @@
 <?
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 include "DAO/estadoDAO.php";
 include "DAO/moduloDAO.php";
 include "DAO/ambienteDAO.php";
@@ -104,7 +104,7 @@ class Mapa extends SessionObject{
 		
 		$this->edificioSelecionado = $this->listaEdificios[$ed_id];
 		$this->edificioSelecionado = $this->edificioDAO->loadListaAndares($this->edificioSelecionado, $this->dao->getConexao());
-		print_r($this->edificioSelecionado);
+		echo json_encode($this->edificioSelecionado->getListaAndares());
 
 	}
 }
@@ -115,7 +115,7 @@ if (!$mapa){
 if($_REQUEST['ed_id']){
 	$mapa->sel_Edificio($_REQUEST['ed_id']);
 }
-echo "ok";
+//echo "ok";
 
 //$mapa->$listaEdificios;
 // include 'DAO/edificioDAO.php';

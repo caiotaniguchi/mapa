@@ -1,10 +1,10 @@
 <?php
     class Andar {
-        private $id;
-        private $numAndar;
-        private $planta;
+        public $id;
+        public $numAndar;
+        public $planta;
         private $listaAmbientes;
-        private $idEdificio;
+        public $idEdificio;
         
         public function setId($id) {
             $this->id = $id;

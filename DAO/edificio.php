@@ -4,7 +4,7 @@
         public $nome;
         public $andarInicial;
         public $andarFinal;
-        public $listaAndares;
+        private $listaAndares;
         
         public function setId($id) {
             $this->id = $id;
