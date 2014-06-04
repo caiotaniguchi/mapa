@@ -1,5 +1,6 @@
 <?php
 include 'andar.php';
+include 'ambienteDAO.php';
 
 class AndarDAO {
     
@@ -53,20 +54,18 @@ class AndarDAO {
         // otherwise insert a new user.
         if($update) {
             $sql = 	"UPDATE sala SET ".
-					"nome=".$andar->getNome().", ".
-					"andar_inicial=".$andar->getAndar().", ".
-					"andar_final=".$andar->getPosicaoY().", ".
+					"numAndar=".$andar->getNumAndar().", ".
+					"planta=".$andar->getPlanta().", ".
+					"edificio_id=".$andar->getIdEdificio().", ".
 					"WHERE id=".$andar->getId();
             
             mysql_query($sql, $conexao) or die(mysql_error());
         }
         else {
-            $sql = 	"INSERT INTO sala (nome, posicao_x, posicao_y, contorno, andar_id) VALUES('".
-					$ambiente->getNome()."', ".
-					$ambiente->getPosicaoX().", ".
-					$ambiente->getPosicaoY().", '".
-					$ambiente->getContorno()."', ".
-					$ambiente->getIdAndar().")";
+            $sql = 	"INSERT INTO andar (numAndar, planta, edificio_id) VALUES(".
+					$andar->getNumAndar().", '".
+					$andar->getPlanta()."', ".
+					$andar->getIdEdificio().")";
             
             mysql_query($sql, $conexao) or die(mysql_error());
         }

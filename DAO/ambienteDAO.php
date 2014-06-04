@@ -1,5 +1,6 @@
 <?php
 include 'ambiente.php';
+include 'moduloDAO.php';
 
 class AmbienteDAO {
     

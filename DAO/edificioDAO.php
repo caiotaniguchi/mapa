@@ -1,5 +1,6 @@
 <?php
 include 'edificio.php';
+include 'andarDAO.php';
 
 class EdificioDAO {
     
@@ -39,8 +40,46 @@ class EdificioDAO {
     
     public function loadListaAndares($edificio, $conexao) {
 		$andarDAO = new AndarDAO();
+		
 		$edificio->setListaAndares($andarDAO->getPorIdEdificio($edificio->getId(), $conexao));
 		return $edificio;
+    }
+    
+    public function gravar($edificio, $conexao) {
+        $edificiosAtuais = null;
+        
+        if($edificio->getId() != "") {
+            $edificiosAtuais = $this->getEdificios($conexao);
+        }
+        
+        $update = false;
+        
+        for ($i = 0; $i < count($edificiosAtuais); $i++) {
+			if ($edificiosAtuais[$i]->getId() == $edificio->getId()) {
+				$update = true;
+			}
+		}
+		
+		// If the query returned a row then update,
+        // otherwise insert a new user.
+        if($update) {
+            $sql = 	"UPDATE edificio SET ".
+					"nome=".$edificio->getNome().", ".
+					"andar_inicial=".$edificio->getAndarInicial().", ".
+					"andar_final=".$edificio->getAndarFinal().", ".
+					"WHERE id=".$edificio->getId();
+            
+            mysql_query($sql, $conexao) or die(mysql_error());
+        }
+        else {
+            $sql = 	"INSERT INTO edificio (nome, andar_inicial, andar_final) VALUES('".
+					$edificio->getNome()."', ".
+					$edificio->getAndarInicial().", ".
+					$edificio->getAndarFinal().")";
+            
+            mysql_query($sql, $conexao) or die(mysql_error());
+        }
+        return true;
     }
     
 }

@@ -1,8 +1,4 @@
 <?php
-	include "estadoDAO.php";
-	include "moduloDAO.php";
-	include "ambienteDAO.php";
-	include "andarDAO.php";
 	include "edificioDAO.php";
 	include "DAO.php";
 	
@@ -29,7 +25,7 @@
 	echo $andares[0]->getId()."\n";
 	$andares[0] = $andarDAO->loadListaAmbientes($andares[0]);
 	*/
-	
+	/*
 	$edificio = $edificioDAO->getEdificios($dao->getConexao());
 	
 	$andar = $andarDAO->getPorIdEdificio(1,$dao->getConexao());
@@ -41,7 +37,7 @@
 	echo $ambiente[0]->getId()."\n";
 	echo $andar[0]->getId()."\n";
 	echo $edificio[0]->getNome()."\n";
-	
+	*/
 	/*
 	$moduloNovo = new Modulo();
 	$moduloNovo->setId(5);
@@ -57,8 +53,23 @@
 	$ambienteNovo->setContorno("1234");
 	$ambienteNovo->setIdAndar(1);
 	
-	
 	$ambienteDAO->gravar($ambienteNovo);
 	*/
+	/*
+	
+	$andarNovo = new Andar();
+	$andarNovo->setNumAndar(3);
+	$andarNovo->setPlanta("planta");
+	$andarNovo->setIdEdificio(1);
+	
+	$andarDAO->gravar($andarNovo, $dao->getConexao());
+	*/
+	
+	$edificioNovo = new Edificio();
+	$edificioNovo->setNome("ct2");
+	$edificioNovo->setAndarInicial(-1);
+	$edificioNovo->setAndarFinal(2);
+	
+	$edificioDAO->gravar($edificioNovo, $dao->getConexao());
 	
 ?>
