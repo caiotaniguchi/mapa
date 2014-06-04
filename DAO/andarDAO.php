@@ -10,11 +10,11 @@ class AndarDAO {
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
                 $linha = mysql_fetch_assoc($resultados);
-				$andares[$i] = new Andar();
+				$andares[$linha['id']] = new Andar();
                 
-                $andares[$i]->setId($linha['id']);
-                $andares[$i]->setNumAndar($linha['numAndar']);
-				$andares[$i]->setPlanta($linha['planta']);
+                $andares[$linha['id']]->setId($linha['id']);
+                $andares[$linha['id']]->setNumAndar($linha['numAndar']);
+				$andares[$linha['id']]->setPlanta($linha['planta']);
             }
         }
         return $andares;

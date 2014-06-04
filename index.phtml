@@ -46,13 +46,6 @@
 				xhr.start();	
   			}
   			function changeAndar(an_id){
-  				xhr.url = "mapa.php?an_id="+an_id;
-  				xhr.onUpdate = function(request) {				
-					try {
-						//var src = request.responseText;
-						//console.log(src);
-					} catch(e) {
-					}
           var src = "";
           for(andar in mapa['listaAndares']){
             if(mapa['listaAndares'][andar].id == an_id){
@@ -61,9 +54,17 @@
               break;
             }
           }
-					$('map_img').src = src; 
-				}
-				xhr.start();	
+          $('map_img').src = src;
+           
+  				xhr.url = "mapa.php?atualizarAmb="+an_id;
+  				xhr.onUpdate = function(request) {				
+  					try {
+  						//var src = request.responseText;
+  						//console.log(src);
+  					} catch(e) {
+  					}
+				  }
+				  xhr.start();	
   			}
 
   			window.onload=function (){

@@ -104,8 +104,11 @@ class Mapa extends SessionObject{
 		
 		$this->edificioSelecionado = $this->listaEdificios[$ed_id];
 		$this->edificioSelecionado = $this->edificioDAO->loadListaAndares($this->edificioSelecionado, $this->dao->getConexao());
-		echo json_encode($this->edificioSelecionado->getListaAndares());
+		echo "(".json_encode($this->edificioSelecionado->getListaAndares()).")";
 
+	}
+	public function sel_Andar($an_id){
+		$this->andarSelecionado = $this->edificioSelecionado->getListaAndares().$an_id;
 	}
 }
 if (!$mapa){
@@ -114,6 +117,9 @@ if (!$mapa){
 }
 if($_REQUEST['ed_id']){
 	$mapa->sel_Edificio($_REQUEST['ed_id']);
+}
+if($_REQUEST["atualizarAmb"]){
+	$mapa->atualizarAmb($_REQUEST["atualizarAmb"]);
 }
 //echo "ok";
 
