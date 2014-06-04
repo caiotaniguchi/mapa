@@ -7,6 +7,7 @@ class AndarDAO {
     // Executes the specified query and returns an associative array of reseults.
     protected function executar($sql, $conexao) {
         $resultados = mysql_query($sql, $conexao) or die(mysql_error());
+        $andares = null;
         
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
@@ -25,15 +26,19 @@ class AndarDAO {
     // Retrieves the corresponding row for the specified user ID.
     // conferir nome da tabela 'andares' no banco de dados
     public function getPorIdEdificio($idEdificio, $conexao) {
-        $sql = "SELECT * FROM andar WHERE id=".$idEdificio;
+        $sql = "SELECT * FROM andar WHERE edificio_id=".$idEdificio;
         return $this->executar($sql, $conexao);
     }
+    
+    
     
     public function loadListaAmbientes($andar, $conexao) {
 		$ambienteDAO = new AmbienteDAO();
 		$andar->setListaAmbientes($ambienteDAO->getPorIdAndar($andar->getId(), $conexao));
 		return $andar;
     }
+    
+    
     
     public function gravar($andar, $conexao) {
         $andaresAtuais = null;

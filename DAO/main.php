@@ -16,15 +16,16 @@
 	$ambienteDAO = new AmbienteDAO();
 	$andarDAO = new AndarDAO();
 	$edificioDAO = new EdificioDAO();
-	/*
-	$edificios = $edificioDAO->getEdificios();
-	echo $edificios[0]->getId()."\n";
-	echo $edificios[0]->getListaAndares()."\n";
-	$edificios[0] = $edificioDAO->loadListaAndares($edificios[0]);
-	$andares = $edificios[0]->getListaAndares();
-	echo $andares[0]->getId()."\n";
-	$andares[0] = $andarDAO->loadListaAmbientes($andares[0]);
-	*/
+	
+	$edificios = $edificioDAO->getEdificios($dao->getConexao());
+	echo count($edificios)."\n";
+	
+	$edificios[1] = $edificioDAO->loadListaAndares($edificios[1], $dao->getConexao());
+	$andares = $edificios[1]->getListaAndares();
+	echo count($andares)."\n";
+	
+	//$andares[0] = $andarDAO->loadListaAmbientes($andares[0]);
+	
 	/*
 	$edificio = $edificioDAO->getEdificios($dao->getConexao());
 	
@@ -64,12 +65,12 @@
 	
 	$andarDAO->gravar($andarNovo, $dao->getConexao());
 	*/
-	
+	/*
 	$edificioNovo = new Edificio();
 	$edificioNovo->setNome("ct2");
 	$edificioNovo->setAndarInicial(-1);
 	$edificioNovo->setAndarFinal(2);
 	
 	$edificioDAO->gravar($edificioNovo, $dao->getConexao());
-	
+	*/
 ?>
