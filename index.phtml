@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+  		<meta charset="UTF-8">
+  		<title>Mapa</title>
+  		<script type="text/javascript" src="js/async_xhr.js"></script>
+  		<script type="text/javascript" >
+  			function $(id){
+  				var el = document.getElementById(id);
+  				return el; 
+  			}
+  			function changeEdificio(ed_id){
+  				xhr.url = "mapa.php?ed_id="+ed_id;
+  				xhr.onUpdate = function(request) {				
+					try {
+						//_status["response"] = eval(request.responseText);	
+					} catch(e) {
+					}
+				}
+				xhr.start();	
+  			}
+  			function changeAndar(an_id){
+  				xhr.url = "mapa.php?an_id="+an_id;
+  				xhr.onUpdate = function(request) {				
+					try {
+						var src = request.responseText;
+						console.log(src);
+					} catch(e) {
+					}
+					$('map_img').src = src; 
+				}
+				xhr.start();	
+  			}
+
+  			window.onload=function (){
+  				xhr = new XHRUpdater('mapa.php', 0);
+  			}
+  		</script>
+ 	</head>
+ 	<body>
+ 		<div id ="nav">
+ 			<form>
+ 				<select id="sel_edificio" onchange="changeEdificio(this.value);"  >
+ 					<option value=''>--Escolha um Edificio--</option>
+ 					<option value='1'>Ed1</option>
+ 					<option value='2'>Ed2</option>
+ 				</select>
+ 				<select id="sel_andar" onchange="changeAndar(this.value);" >
+ 					<option value=''>--Escolha um Andar--</option>
+ 					<option value='1'>An1</option>
+ 					<option value='2'>An2</option>
+ 				</select> 
+ 			</form>
+		</div>
+		<div id ="map_div">
+			<img id="map_img" src=""/>
+		</div>
+  	</body>
+</html>
