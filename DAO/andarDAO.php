@@ -2,11 +2,6 @@
 include 'andar.php';
 
 class AndarDAO {
-    private $ambienteDAO;
-    
-    public function AndarDAO ($ambienteDAO) {
-		$this->ambienteDAO = $ambienteDAO;
-	}
     
     // Executes the specified query and returns an associative array of reseults.
     protected function executar($sql, $conexao) {
@@ -21,7 +16,6 @@ class AndarDAO {
                 $andares[$i]->setNumAndar($linha['numAndar']);
 				$andares[$i]->setPlanta($linha['planta']);
                 $andares[$i]->setIdEdificio($linha['edificio_id']);
-				//$andares[$i]->setListaAmbientes($this->ambienteDAO->getPorIdAndar($andares[$i]->getId()));
             }
         }
         return $andares;
@@ -35,8 +29,48 @@ class AndarDAO {
     }
     
     public function loadListaAmbientes($andar, $conexao) {
-		$andar->setListaAmbientes($this->ambienteDAO->getPorIdAndar($andar->getId(), $conexao));
+		$ambienteDAO = new AmbienteDAO();
+		$andar->setListaAmbientes($ambienteDAO->getPorIdAndar($andar->getId(), $conexao));
 		return $andar;
+    }
+    
+    public function gravar($andar, $conexao) {
+        $andaresAtuais = null;
+        
+        if($andar->getId() != "") {
+            $andaresAtuais = $this->getPorIdEdificio($andar->getIdEdificio(), $conexao);
+        }
+        
+        $update = false;
+        
+        for ($i = 0; $i < count($andaresAtuais); $i++) {
+			if ($andaresAtuais[$i]->getId() == $andar->getId()) {
+				$update = true;
+			}
+		}
+		
+		// If the query returned a row then update,
+        // otherwise insert a new user.
+        if($update) {
+            $sql = 	"UPDATE sala SET ".
+					"nome=".$andar->getNome().", ".
+					"andar_inicial=".$andar->getAndar().", ".
+					"andar_final=".$andar->getPosicaoY().", ".
+					"WHERE id=".$andar->getId();
+            
+            mysql_query($sql, $conexao) or die(mysql_error());
+        }
+        else {
+            $sql = 	"INSERT INTO sala (nome, posicao_x, posicao_y, contorno, andar_id) VALUES('".
+					$ambiente->getNome()."', ".
+					$ambiente->getPosicaoX().", ".
+					$ambiente->getPosicaoY().", '".
+					$ambiente->getContorno()."', ".
+					$ambiente->getIdAndar().")";
+            
+            mysql_query($sql, $conexao) or die(mysql_error());
+        }
+        return true;
     }
     
     

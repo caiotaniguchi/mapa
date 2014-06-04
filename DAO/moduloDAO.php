@@ -2,14 +2,11 @@
 include 'modulo.php';
 
 class ModuloDAO {
-	private $estadoDAO;
 	
-	public function ModuloDAO ($estadoDAO) {
-		$this->estadoDAO = $estadoDAO;
-	}
     
     // Executa uma query e retorna um array de modulos
     protected function executar($sql, $conexao) {
+		$estadoDAO = new EstadoDAO();
         $resultados = mysql_query($sql, $conexao) or die(mysql_error());
         $modulos = null;
         
@@ -20,7 +17,7 @@ class ModuloDAO {
                       
                 $modulos[$i]->setId($linha['id']);
                 $modulos[$i]->setIdAmbiente($linha['sala_id']);
-				$modulos[$i]->setEstado($this->estadoDAO->getPorIdModulo($modulos[$i]->getId(), $conexao));
+				$modulos[$i]->setEstado($estadoDAO->getPorIdModulo($modulos[$i]->getId(), $conexao));
             }
         }
         return $modulos;

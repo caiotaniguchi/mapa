@@ -2,15 +2,11 @@
 include 'ambiente.php';
 
 class AmbienteDAO {
-    private $moduloDAO;
-    
-    public function AmbienteDAO ($moduloDAO) {
-		$this->moduloDAO = $moduloDAO;
-	}
     
     // Executes the specified query and returns an associative array of reseults.
     protected function executar($sql, $conexao) {
         $resultados = mysql_query($sql, $conexao) or die(mysql_error());
+        $moduloDAO = new ModuloDAO();
         
         if(mysql_num_rows($resultados) > 0) {
             for($i = 0; $i < mysql_num_rows($resultados); $i++) {
@@ -23,7 +19,7 @@ class AmbienteDAO {
                 $ambientes[$i]->setPosicaoY($linha['posicao_y']);
                 $ambientes[$i]->setContorno($linha['contorno']);
                 $ambientes[$i]->setIdAndar($linha['andar_id']);
-                $ambientes[$i]->setlistaModulos($this->moduloDAO->getPorIdAmbiente($ambientes[$i]->getId(), $conexao));
+                $ambientes[$i]->setlistaModulos($moduloDAO->getPorIdAmbiente($ambientes[$i]->getId(), $conexao));
             }
         }
         return $ambientes;

@@ -2,11 +2,7 @@
 include 'edificio.php';
 
 class EdificioDAO {
-     private $andarDAO;
     
-    public function EdificioDAO ($andarDAO) {
-		$this->andarDAO = $andarDAO;
-	}
     /*
     // Attempts to initialize the database connection using the supplied info.
     public function EdificioDAO($host, $usuario, $senha, $database) {
@@ -42,7 +38,8 @@ class EdificioDAO {
     }
     
     public function loadListaAndares($edificio, $conexao) {
-		$edificio->setListaAndares($this->andarDAO->getPorIdEdificio($edificio->getId(), $conexao));
+		$andarDAO = new AndarDAO();
+		$edificio->setListaAndares($andarDAO->getPorIdEdificio($edificio->getId(), $conexao));
 		return $edificio;
     }
     

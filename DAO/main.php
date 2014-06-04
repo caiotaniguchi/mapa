@@ -16,10 +16,10 @@
 	//$estadoDAO = new EstadoDAO($host,$usuario,$senha,$database);
 	$dao = new DAO ($host,$usuario,$senha,$database);
 	$estadoDAO = new EstadoDAO();
-	$moduloDAO = new ModuloDAO($estadoDAO);
-	$ambienteDAO = new AmbienteDAO($moduloDAO);
-	$andarDAO = new AndarDAO($ambienteDAO);
-	$edificioDAO = new EdificioDAO($andarDAO);
+	$moduloDAO = new ModuloDAO();
+	$ambienteDAO = new AmbienteDAO();
+	$andarDAO = new AndarDAO();
+	$edificioDAO = new EdificioDAO();
 	/*
 	$edificios = $edificioDAO->getEdificios();
 	echo $edificios[0]->getId()."\n";
