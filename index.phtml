@@ -1,3 +1,15 @@
+<?
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  include 'DAO/edificioDAO.php';
+  include 'DAO/edificio.php';
+  $db_host = 'localhost';
+  $db_usuario = 'root';
+  $db_senha = '1234';
+  $db_database = 'rede_sensores';
+  $edDao = new EdificioDAO($db_host, $db_usuario, $db_senha, $db_database, 1);
+  $edificios = $edDao->getEdificios();
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -42,8 +54,9 @@
  			<form>
  				<select id="sel_edificio" onchange="changeEdificio(this.value);"  >
  					<option value=''>--Escolha um Edificio--</option>
- 					<option value='1'>Ed1</option>
- 					<option value='2'>Ed2</option>
+          <? foreach($edificios as $edificio):?>
+ 					  <option value='<?=$edificio->getId()?>'><?= $edificio->getNome()?></option>
+          <?endforeach;?>
  				</select>
  				<select id="sel_andar" onchange="changeAndar(this.value);" >
  					<option value=''>--Escolha um Andar--</option>
